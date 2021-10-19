@@ -7,11 +7,12 @@ import { css } from '@emotion/react';
 const menuStyle = css`
     position : absolute;
     width : 15rem;
+    height : 100vh;
     bottom : 0;
     top : 0;
     background-color : ${palette.black[0]};
     font-size : 20px;
-    padding-top : 50rem;
+    padding-top : 60vh;
     text-align : center;
     display : flex;
     flex-direction : column;
