@@ -6,13 +6,13 @@ import { css } from '@emotion/react';
 
 const menuStyle = css`
     position : absolute;
-    width : 15rem;
-    height : 100vh;
+    width : 15vw;
+    height : 4  0vh;
     bottom : 0;
     top : 0;
+    padding-top : 60vh;
     background-color : ${palette.black[0]};
     font-size : 20px;
-    padding-top : 60vh;
     text-align : center;
     display : flex;
     flex-direction : column;

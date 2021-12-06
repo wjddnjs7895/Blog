@@ -2,12 +2,15 @@
 import React from 'react';
 import MenuList from '../components/menu/MenuList';
 import pagestyle from '../lib/styles/pagestyle';
+import File from '../components/algorithm/Files';
 
 const AlgorithmPage = () => {
     return (
         <>
             <MenuList />
-            <div css = {pagestyle}>Algorithm page</div>
+            <div css = {pagestyle}>
+                <File />
+            </div>
         </>
     );
 };

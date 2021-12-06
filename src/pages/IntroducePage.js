@@ -9,7 +9,6 @@ const IntroducePage = () => {
         <>
             <MenuList />
             <div css = {pagestyle}>
-                Introduce page
                 <BlockCycle />
             </div>
             
