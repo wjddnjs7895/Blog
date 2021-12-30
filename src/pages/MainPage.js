@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 import MenuList from '../components/menu/MenuList';
-import pagestyle from '../lib/styles/pagestyle';
+import settingstyle from '../lib/styles/settingstyle';
 
 const MainPage = () => {
     return (
         <>
             <MenuList />
-            <div css = {pagestyle}>MainPage</div>
+            <div css = {settingstyle}>MainPage</div>
         </>
     );
 };

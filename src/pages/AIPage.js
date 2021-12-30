@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 import MenuList from '../components/menu/MenuList';
-import pagestyle from '../lib/styles/pagestyle';
+import settingstyle from '../lib/styles/settingstyle';
 
 const AIPage = () => {
     return (
         <>
             <MenuList />
-            <div css = {pagestyle}>AI page</div>
+            <div css = {settingstyle}>AI page</div>
         </>
     );
 };

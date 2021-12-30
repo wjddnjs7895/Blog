@@ -6,7 +6,7 @@ import produce from 'immer';
 
 import logo_github from '../../assets/introduce/logo_github.png';
 import logo_boj from '../../assets/introduce/logo_boj.png';
-import logo_mbti from '../../assets/introduce/logo_mbti.svg';
+import logo_mbti from '../../assets/introduce/logo_mbti.png';
 import logo_self from '../../assets/introduce/logo_self.png';
 
 var size = [
@@ -14,58 +14,47 @@ var size = [
     window.innerWidth - 500, 
 ]
 
+const urls = [logo_self, logo_boj, logo_github, logo_mbti];
+
 const BlockStyle = styled(animated.div)`
     position : absolute;
-    width : 14rem;
-    height : 16rem;    
+    width : 12rem;
+    height : 19.5rem;    
     padding-top : 1rem;
     padding-left : 1rem;
     padding-right : 1rem;
     padding-bottom : 5rem;
-    background-color : white;
-    border : 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow : 3px 6px 12px rgba(0, 0, 0, 0.3);
+    background-image : url(${(props) => props.url});
+    background-size : cover;
+    border : solid 1px;
+    border-color : rgba(50,50,50,0.8);
     transform : scale(1.0);
     transition-duration : 1s;
-    .title {
-        color : black;
-    }
-`;
-
-const PictureStyle = styled.img`
-    border : 1px solid rgba(0, 0, 0, 0.3);
-    height : 100%;
-    width : 100%;
-    margin : auto 0;
+    cursor : pointer;
+    z-index : ${(props) => props.mouse ? 5 : props.id}
 `;
 
 let pos_array = [];
 
 const getpos = () => {
     for (let i = 0; i < 4; i++) {
-        pos_array.push({x : getRandomPos(0), y : getRandomPos(1), deg : getRandomDeg()});
+        pos_array.push({x : getRandomPos(0, i), y : getRandomPos(1, i), deg : getRandomDeg()});
     }
 }
 
-const getRandomPos = (axis) => {
+const getRandomPos = (axis, idx) => {
     let min = 0;
     let max = size[axis];
     let temp = parseInt(Math.random() * (max-min) + min);
-    while (true) {
-        let flag = 1;
-        if (pos_array.length === 1)
-            break;
-        temp = parseInt(Math.random() * (max - min) + min);
-        for (let i = 0; i < pos_array.length - 1; i++) {
-            if (Math.abs(pos_array[i][axis] - temp) < 10) {
-                flag = 0;
-                break;
-            }
-        }
-        if(flag) {
-            return temp;
-        }
+    if (axis === 1) {
+        min = (size[axis] / urls.length) * idx;
+        max = (size[axis] / urls.length) * (idx + 0.5);
+        console.log(idx)
+        console.log(min)
+        console.log(max)
     }
+
+    temp = parseInt(Math.random() * (size[axis] / urls.length) + min);
     return temp;
 }
 
@@ -76,6 +65,7 @@ const getRandomDeg = () => {
 }
 
 getpos();
+console.log(pos_array)
 const Block = () => {
     const [blocks,setBlocks] = useState([
         {
@@ -127,12 +117,12 @@ const Block = () => {
         from : from(i)
     }));
 
-    const onClick = 
-        (i) => {
+    const onMouse = 
+        (i, temp) => {
             setBlocks(
                 produce(blocks,draft => {
                     const block = draft.find(block => block.id === i);
-                    block.mouse = !block.mouse;
+                    block.mouse = temp;
                 })
             );
         };
@@ -140,7 +130,8 @@ const Block = () => {
     return (
         props.map(({x,y,degree,},i) => ( 
             <BlockStyle
-                onClick = {() => onClick(i)}
+                onMouseEnter = {() => onMouse(i, true)}
+                onMouseLeave = {() => onMouse(i, false)}
                 style = {{ 
                     transform : interpolate([x, y, degree],(x , y, degree) => `
                         translate3d(${x}px,${y}px,0) 
@@ -148,16 +139,14 @@ const Block = () => {
                         scale(${blocks[i].mouse ? 1.1 : 1}
                     `),
                 }}
+                id = {blocks[i].id}
                 top = {blocks[i].top}
                 left = {blocks[i].left}
                 key = {blocks[i].id}
                 degree = {blocks[i].degree}
-            >
-                <PictureStyle src = {blocks[i].src}/>
-                    <div className = 'title'>
-                        Title : {blocks[i].title}
-                    </div>
-            </BlockStyle>
+                url = {urls[blocks[i].id]}
+                mouse = {blocks[i].mouse}
+            />
         ))
     );
 }
